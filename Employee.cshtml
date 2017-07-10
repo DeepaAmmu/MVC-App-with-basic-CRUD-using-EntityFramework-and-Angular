@@ -1,0 +1,100 @@
+﻿
+
+@{
+    ViewBag.Title = "Employee";
+    
+}
+
+@model  F2BMVCAngularApp.Models.EmployeeModel
+
+<p>
+    @Html.ActionLink("Add Employee", "Create")
+</p>
+
+<h2>Employee Details</h2>
+<head>
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    
+    <script type="text/javascript">
+        document.ready()
+        {
+            function deletionconfirmation() {
+                alert("Deletion Successful")
+            }
+            function deletionerror() {
+                alert("Deletion Error")
+            }
+        }
+        
+    </script>
+</head>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.empViewModel.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.empViewModel.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.empViewModel.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.empViewModel.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.empViewModel.EmailId)
+        </th>
+        <th>
+            @Html.DisplayName("Address")
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model.EmployeeDetails)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => item.Id)
+                
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlatNo),@Html.DisplayFor(modelItem => item.street),
+                @Html.DisplayFor(modelItem => item.CityName)<br />@Html.DisplayFor(modelItem => item.StateName),
+                @Html.DisplayFor(modelItem => item.Country),@Html.DisplayFor(modelItem => item.Pincode)
+            </td>
+            <td>
+                                
+                @Html.ActionLink("Edit","Edit",new { id = item.Id}) |
+
+                @Ajax.ActionLink("Delete", "Delete", "Home", new { id = item.Id }, new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                       
+                        OnSuccess = "deletionconfirmation",
+                        OnFailure = "deletionerror"
+                    })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
